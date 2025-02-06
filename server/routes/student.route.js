@@ -4,6 +4,7 @@ const {
   listStudents,
   deleteStudent,
   getStudent,
+  updateStudent,
 } = require("../controllers/student.controler");
 const studentRouter = express.Router();
 
@@ -13,6 +14,8 @@ studentRouter.get("/list", listStudents);
 
 studentRouter.delete("/delete", deleteStudent);
 
-studentRouter.get("/edit", getStudent);
+studentRouter.get("/one", getStudent);
+
+studentRouter.put("/update", updateStudent);
 
 module.exports = { studentRouter };

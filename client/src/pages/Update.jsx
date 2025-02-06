@@ -4,25 +4,52 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 function Update() {
-  const [student, setStudent] = useState({});
+  const [name, setName] = useState("");
+  const [age, setAge] = useState(0);
+  const [phone, setPhone] = useState(0);
+  const [id, setId] = useState(0);
   const { studentId } = useParams();
   console.log(studentId);
 
-  const getUpdate = async () => {
+  const getStudent = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:3000/api/students/edit",
-        { _id: studentId }
+        `http://localhost:3000/api/students/one?id=${studentId}`
       );
       console.log(data);
-      setStudent(data);
+      setName(data.name);
+      setAge(data.age);
+      setPhone(data.phone);
+      setId(data._id);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const updateStudent = async () => {
+    try {
+      const { data } = await axios.put(
+        "http://localhost:3000/api/students/update",
+        {
+          name: name,
+          age: age,
+          phone: phone,
+          _id: id,
+        }
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    updateStudent();
+  };
+
   useEffect(() => {
-    getUpdate();
+    getStudent();
   }, []);
 
   return (
@@ -35,23 +62,29 @@ function Update() {
               Update Details
             </h2>
             <input
-              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               type="text"
               className="bg-amber-50 px-6 py-4 rounded-xl border w-full border-black text-amber-900"
             />
 
             <input
-              placeholder="Age"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
               type="number"
               className="bg-amber-50 px-6 py-4 rounded-xl border w-full border-black text-amber-900"
             />
 
             <input
-              placeholder="Phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
               type="number"
               className="bg-amber-50 px-6 py-4 rounded-xl border w-full border-black text-amber-900"
             />
-            <button className="bg-amber-950 w-2/3 text-amber-100 text-xl font-medium py-3 border border-black rounded-xl ">
+            <button
+              className="bg-amber-950 w-2/3 text-amber-100 text-xl font-medium py-3 border border-black rounded-xl "
+              onClick={handleUpdate}
+            >
               Update
             </button>
           </form>

@@ -1,3 +1,4 @@
+const { query } = require("express");
 const { Students } = require("../models/student.model");
 
 const createStudent = async (req, res) => {
@@ -27,11 +28,28 @@ const deleteStudent = async (req, res) => {
 
 const getStudent = async (req, res) => {
   try {
-    const data = await Students.findById(req.body);
-    re.status(200).json(data);
+    const data = await Students.findById(req.query.id);
+    return res.status(200).json(data);
   } catch (error) {
-    res.status(500).json({ msg: "operation failed" });
+    return res.status(500).json({ msg: "operation failed" });
   }
 };
 
-module.exports = { createStudent, listStudents, deleteStudent, getStudent };
+const updateStudent = async (req, res) => {
+  try {
+    const update = req.body;
+    const id = req.body._id;
+    const data = await Students.findByIdAndUpdate(id, update);
+    res.status(200).json({ msg: "list updated", data });
+  } catch (error) {
+    res.status(500).json({ msg: "error updating list", error });
+  }
+};
+
+module.exports = {
+  createStudent,
+  listStudents,
+  deleteStudent,
+  getStudent,
+  updateStudent,
+};

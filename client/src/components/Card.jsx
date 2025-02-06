@@ -6,7 +6,7 @@ function Card({ students }) {
   const handleDelete = async () => {
     const { data } = await axios.delete(
       "http://localhost:3000/api/students/delete",
-      { name: students.name, age: students.age, place: students.place }
+      { _id: students._id }
     );
     console.log(data);
   };
