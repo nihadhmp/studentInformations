@@ -16,4 +16,22 @@ const listStudents = async (req, res) => {
   res.status(200).json(data);
 };
 
-module.exports = { createStudent, listStudents };
+const deleteStudent = async (req, res) => {
+  try {
+    await Students.deleteOne(req.body);
+    res.status(202).json({ msg: "list have been deleted" });
+  } catch (error) {
+    res.status(500).json({ msg: "operation failed" });
+  }
+};
+
+const getStudent = async (req, res) => {
+  try {
+    const data = await Students.findById(req.body);
+    re.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({ msg: "operation failed" });
+  }
+};
+
+module.exports = { createStudent, listStudents, deleteStudent, getStudent };

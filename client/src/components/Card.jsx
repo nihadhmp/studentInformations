@@ -1,6 +1,16 @@
+import axios from "axios";
+
 import { Link } from "react-router-dom";
 
 function Card({ students }) {
+  const handleDelete = async () => {
+    const { data } = await axios.delete(
+      "http://localhost:3000/api/students/delete",
+      { name: students.name, age: students.age, place: students.place }
+    );
+    console.log(data);
+  };
+
   return (
     <>
       <section className="w-full bg-amber-900 py-5 px-6 rounded-xl">
@@ -23,12 +33,15 @@ function Card({ students }) {
         </div>
         <div className="flex gap-5 mt-5">
           <Link
-            to="/update"
+            to={`/update/${students._id}`}
             className="py-2 px-4 text-amber-900 bg-amber-50 border border-amber-50 rounded-full text-xl"
           >
             Edit
           </Link>
-          <button className="py-2 px-4 text-amber-900 bg-amber-50 border border-amber-50 rounded-full text-xl">
+          <button
+            onClick={handleDelete}
+            className="py-2 px-4 text-amber-900 bg-amber-50 border border-amber-50 rounded-full text-xl"
+          >
             Delete
           </button>
         </div>

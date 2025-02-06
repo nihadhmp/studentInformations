@@ -1,6 +1,30 @@
+import axios from "axios";
 import Navbar from "../components/Navbar";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function Update() {
+  const [student, setStudent] = useState({});
+  const { studentId } = useParams();
+  console.log(studentId);
+
+  const getUpdate = async () => {
+    try {
+      const { data } = await axios.get(
+        "http://localhost:3000/api/students/edit",
+        { _id: studentId }
+      );
+      console.log(data);
+      setStudent(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUpdate();
+  }, []);
+
   return (
     <>
       <Navbar />
