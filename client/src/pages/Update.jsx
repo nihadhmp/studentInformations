@@ -1,9 +1,10 @@
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 function Update() {
+  const [updated, setUpdated] = useState({});
   const [name, setName] = useState("");
   const [age, setAge] = useState(0);
   const [phone, setPhone] = useState(0);
@@ -17,6 +18,7 @@ function Update() {
         `http://localhost:3000/api/students/one?id=${studentId}`
       );
       console.log(data);
+
       setName(data.name);
       setAge(data.age);
       setPhone(data.phone);
@@ -37,6 +39,7 @@ function Update() {
           _id: id,
         }
       );
+      setUpdated(data);
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -50,7 +53,7 @@ function Update() {
 
   useEffect(() => {
     getStudent();
-  }, []);
+  }, [updated]);
 
   return (
     <>

@@ -14,7 +14,7 @@ function Card({ students }) {
   return (
     <>
       <section className="w-full bg-amber-900 py-5 px-6 rounded-xl">
-        <div className="h-full items-center flex text-amber-50 font-medium justify-center  text-2xl gap-5">
+        <div className="h-full items-center flex text-amber-50 font-medium   text-2xl gap-5">
           <ul className="flex flex-col gap-7">
             <li>Name</li>
             <li>Age</li>
